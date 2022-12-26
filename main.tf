@@ -31,7 +31,7 @@ module "vpc" {
   enable_nat_gateway = true
   enable_vpn_gateway = var.enable_vpn_gateway
 
-  tags = locals.tags
+  tags = local.tags
 }
 
 module "app_security_group" {
@@ -44,7 +44,7 @@ module "app_security_group" {
 
   ingress_cidr_blocks = module.vpc.public_subnets_cidr_blocks
 
-  tags =locals.tags
+  tags =local.tags
 }
 
 module "lb_security_group" {
@@ -57,7 +57,7 @@ module "lb_security_group" {
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
 
-  tags = locals.tags
+  tags = local.tags
 }
 
 resource "random_string" "lb_id" {
@@ -95,7 +95,7 @@ module "elb_http" {
     timeout             = 5
   }
 
-  tags =locals.tags
+  tags =local.tags
 }
 
 data "aws_ami" "amazon_linux" {
@@ -128,5 +128,5 @@ resource "aws_instance" "app" {
     echo "<html><body><div>Hello, world!</div></body></html>" > /var/www/html/index.html
     EOF
 
-  tags = locals.tags
+  tags = local.tags
 }
